@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-      <!-- justify-content:space-between -->
+      <!-- justify-content:space-between; 左右贴边对齐 -->
+      <!-- 文档： https://element.eleme.cn/#/zh-CN/component/layout#dui-qi-fang-shi -->
       <el-row type="flex" class="main" justify="space-between">
           <!-- logo -->
           <div class="logo">

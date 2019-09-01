@@ -5,6 +5,7 @@
 
     <!-- 页面的占位符,类似于router-view -->
     <nuxt />
+    
     footer
   </div>
 </template>
