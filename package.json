@@ -1,0 +1,21 @@
+{
+  "name": "xianyun",
+  "version": "1.0.0",
+  "description": "My swell Nuxt.js project",
+  "author": "诸葛建国",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "element-ui": "^2.4.11",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {}
+}
