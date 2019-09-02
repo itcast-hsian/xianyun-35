@@ -5,8 +5,9 @@
 
     <!-- 页面的占位符,类似于router-view -->
     <nuxt />
-    
-    footer
+
+    <!-- 渲染页脚组件 -->
+    <Footer/>
   </div>
 </template>
 
@@ -14,12 +15,15 @@
 
 //导入header头部组件
 import Header from "@/components/header";
+// 导入footer页脚组件
+import Footer from "@/components/footer";
 
 export default {
   
   // 注册组件
   components: {
-    Header
+    Header,
+    Footer
   }
 }
 </script>
