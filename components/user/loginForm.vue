@@ -71,7 +71,14 @@ export default {
                 // 当valid的值等于true说明表单验证通过
                 if(valid){
                     
-                    
+                    // 请求登录接口
+                    this.$axios({
+                        url: "/accounts/login",
+                        method: "POST", // method没有s
+                        data: this.form
+                    }).then(res => {
+                        console.log(res)
+                    })
 
                 }else{
                     console.log("验证失败")
