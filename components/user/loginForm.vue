@@ -1,18 +1,26 @@
 <template>
+
+    <!-- model:绑定数据对象 -->
+    <!-- ref：获取dom元素，this.$refs.form   -->
+    <!-- rules：表单验证规则 -->
     <el-form 
         :model="form" 
         ref="form"
         :rules="rules" 
         class="form">
 
+        <!-- 用户名的输入框 -->
         <el-form-item class="form-item">
             <el-input 
+            v-model="form.username"
             placeholder="用户名/手机">
             </el-input>
         </el-form-item>
 
+        <!-- 密码的输入框 -->
         <el-form-item class="form-item">
             <el-input 
+            v-model="form.password"
             placeholder="密码" 
             type="password">
             </el-input>
@@ -22,6 +30,7 @@
             <nuxt-link to="#">忘记密码</nuxt-link>
         </p>
 
+        <!-- 登录按钮 -->
         <el-button 
         class="submit"
         type="primary"
@@ -37,7 +46,10 @@ export default {
     data(){
         return {
             // 表单数据
-            form: {},
+            form: {
+                username: "", // 用户名
+                password: "", // 密码
+            },
             // 表单规则
             rules: {},
         }
