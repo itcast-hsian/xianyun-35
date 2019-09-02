@@ -117,8 +117,7 @@ export default {
       this.banners = data;
     })
 
-    console.dir(this.$axios);
-
+    //console.dir(this.$axios);
   }
 };
 </script>
