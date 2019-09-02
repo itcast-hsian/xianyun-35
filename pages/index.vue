@@ -27,10 +27,12 @@
             <el-row 
             type="flex" 
             class="search-tab">
+                <!-- 动态的class，当然的索引和循环的索引相等时候就加上active -->
                 <span 
                 v-for="(item, index) in options"
                 :key="index"
-                @click="handleClick(index)">
+                @click="handleClick(index)"
+                :class="{ active: current === index }">
                   <i>{{ item.title }}</i>
                 </span>
             </el-row>
@@ -88,6 +90,14 @@ export default {
   methods: {
     // 点击搜索的tab栏时候触发
     handleClick(index){
+
+      // 点击索引是2时候，代表点击是机票
+      if(index === 2){
+        // 路由规则虽然pages可以直接访问，不需要配置
+        // 但是可以通用路由的方法
+        this.$router.push("/air");
+      }
+
       // 把当前点击的索引赋值给current
       this.current = index;
     }
