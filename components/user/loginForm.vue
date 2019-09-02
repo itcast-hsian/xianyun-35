@@ -10,7 +10,7 @@
         class="form">
 
         <!-- 用户名的输入框 -->
-        <el-form-item class="form-item">
+        <el-form-item class="form-item" prop="username">
             <el-input 
             v-model="form.username"
             placeholder="用户名/手机">
@@ -18,7 +18,7 @@
         </el-form-item>
 
         <!-- 密码的输入框 -->
-        <el-form-item class="form-item">
+        <el-form-item class="form-item" prop="password">
             <el-input 
             v-model="form.password"
             placeholder="密码" 
@@ -50,14 +50,35 @@ export default {
                 username: "", // 用户名
                 password: "", // 密码
             },
-            // 表单规则
-            rules: {},
+            // 表单规则,只负责提示，但是表单还是可以提交
+            rules: {
+                username: [
+                    { required: true, message: '请输入用户名', trigger: 'blur' }
+                ],
+                password: [
+                    { required: true, message: '请输入密码', trigger: 'blur' }
+                ],
+            },
         }
     },
     methods: {
         // 提交登录
         handleLoginSubmit(){
-           console.log(this.form)
+
+            // element-ui的验证表单的事件
+            this.$refs.form.validate(valid => {
+
+                // 当valid的值等于true说明表单验证通过
+                if(valid){
+                    
+                    
+
+                }else{
+                    console.log("验证失败")
+                }
+            })
+
+           
         }
     }
 }
