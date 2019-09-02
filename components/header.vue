@@ -19,7 +19,7 @@
 
           <!-- 登录跳转 -->
           <div>
-              <nuxt-link to="/user/login">登录 / 注册</nuxt-link>
+              <nuxt-link to="/user/login">登录 / 注册</nuxt-link> 
           </div>
       </el-row>
   </div>
@@ -27,7 +27,9 @@
 
 <script>
 export default {
-
+    mounted(){
+        console.log(this.$store.state.user.userInfo.token)
+    }
 }
 </script>
 
