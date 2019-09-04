@@ -23,7 +23,7 @@
                 <LoginForm v-if="current == 0"/>
 
                 <!-- 注册功能组件 -->
-                <!-- <RegisterForm v-if="current == 1"/> -->
+                <RegisterForm v-if="current == 1"/>
             </div>
         </el-row>
     </div>
@@ -31,20 +31,22 @@
 
 <script>
 
-// 导入登录组件
+// 导入组件
 import LoginForm from "@/components/user/loginForm";
+import RegisterForm from "@/components/user/registerForm";
 
 export default {
     data(){
         return {
            // 记录当前高亮的索引
-           current: 0
+           current: 1
         }
     },
 
     //注册组件
     components: {
-      LoginForm
+      LoginForm,
+      RegisterForm
     },
 
     methods: {
