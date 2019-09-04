@@ -1,11 +1,14 @@
 // state 是仓库的数据
 // mutations 同步修改state的数据
+// actions 异步修改state的数据
 
 // 用户管理
-export const state = {
-    userInfo: {
-        token:"",
-        user: {}
+export const state = () => {
+    return {
+        userInfo: {
+            token:"",
+            user: {}
+        }
     }
 }
 

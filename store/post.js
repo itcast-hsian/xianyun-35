@@ -1,6 +1,8 @@
 // 用户管理
-export const state = {
-    
+export const state = () => {
+    return {
+        
+    }
 }
 
 export const mutations = {
