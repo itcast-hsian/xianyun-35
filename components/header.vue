@@ -18,8 +18,7 @@
           </el-row>
 
           <!-- 登录跳转 -->
-          <!-- <div v-if="!$store.state.user.userInfo.token"> -->
-          <div v-if="false">
+          <div v-if="!$store.state.user.userInfo.token">
               <nuxt-link to="/user/login">登录 / 注册</nuxt-link> 
           </div>
 
@@ -33,7 +32,8 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>个人中心</el-dropdown-item>
-                        <el-dropdown-item>退出</el-dropdown-item>
+                        <!-- click.native 给第三方组件添加事件需要加上native -->
+                        <el-dropdown-item @click.native="handleLogout">退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
           </div>
@@ -45,7 +45,21 @@
 export default {
     // 组件加载
     mounted(){
-        console.log(this.$store.state.user.userInfo.token)
+        // console.log(this.$store.state.user.userInfo.token)
+        // this.$emit("click")
+    },
+
+    methods: {
+        // 退出
+        handleLogout(){
+            // 清楚登录信息
+            this.$store.commit("user/clearUserInfo");
+
+            this.$message({
+                type:"success",
+                message: "退出成功"
+            })
+        }
     }
 }
 </script>

@@ -15,6 +15,13 @@ export const mutations = {
     setUserInfo(state, data){
         // data是后台返回的用户信息
         state.userInfo = data;
-    }
+    },
 
+    // 清空userInfo 
+    clearUserInfo(state){
+        state.userInfo = {
+            token:"",
+            user: {}
+        }
+    }
 };
