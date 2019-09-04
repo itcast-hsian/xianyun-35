@@ -129,7 +129,28 @@ export default {
 
         // 注册
         handleRegSubmit(){
-           console.log(this.form)
+
+            this.$refs.form.validate( valid => {
+                if(valid){
+                    
+                    // 可以使用...+变量名会指向剩余的属性
+                    const {checkPassword, ...rest} = this.form;
+
+                    // 调用注册接口
+                    this.$axios({   
+                        url:"/accounts/register",
+                        method: "POST",
+                        data: rest
+                    }).then(res => {
+
+                        // 注册成功后帮用户自动登录
+                        // commit接受两个参数，第一个mutations参数是方法名，第二个参数数据
+                        this.$store.commit("user/setUserInfo", res.data)
+                    })
+                }
+            });
+            
+            
         }
     }
 }
