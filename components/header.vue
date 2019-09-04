@@ -18,12 +18,24 @@
           </el-row>
 
           <!-- 登录跳转 -->
-          <div v-if="!$store.state.user.userInfo.token">
+          <!-- <div v-if="!$store.state.user.userInfo.token"> -->
+          <div v-if="false">
               <nuxt-link to="/user/login">登录 / 注册</nuxt-link> 
           </div>
 
           <div v-else>
-               {{ $store.state.user.userInfo.user.nickname }}
+               <el-dropdown>
+                    <span class="el-dropdown-link">
+                        <!-- 头像,昵称 -->
+                        <img :src="` ${$axios.defaults.baseURL}${$store.state.user.userInfo.user.defaultAvatar} `">
+                        <span>{{$store.state.user.userInfo.user.nickname}}</span>
+                        <i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>个人中心</el-dropdown-item>
+                        <el-dropdown-item>退出</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
           </div>
       </el-row>
   </div>
@@ -87,6 +99,20 @@ export default {
             width:156px;
             height:42px;
             display: block;
+        }
+    }
+
+    // 头像样式
+    .el-dropdown-link img{
+        width: 36px;
+        height:36px;
+        border-radius: 50%;
+        vertical-align: middle;
+        box-sizing: border-box;
+        border:2px #fff solid;
+
+        &:hover{
+            border:2px #409eff solid;
         }
     }
 
