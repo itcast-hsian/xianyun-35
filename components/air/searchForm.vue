@@ -22,15 +22,12 @@
 
                 <!-- fetch-suggestions: 获取搜索建议，并且显示在输入框的下拉框中 -->
                 <!-- select：在下拉框中选中时候时候触发的事件 -->
-                
                 <el-autocomplete
                 :fetch-suggestions="queryDepartSearch"
                 placeholder="请搜索出发城市"
                 @select="handleDepartSelect"
                 class="el-autocomplete"
                 ></el-autocomplete>
-
-
 
             </el-form-item>
 
@@ -42,6 +39,7 @@
                 class="el-autocomplete"
                 ></el-autocomplete>
             </el-form-item>
+
             <el-form-item label="出发时间">
                 <!-- change 用户确认选择日期时触发 -->
                 <el-date-picker type="date" 
@@ -50,6 +48,7 @@
                 @change="handleDate">
                 </el-date-picker>
             </el-form-item>
+
             <el-form-item label="">
                 <el-button style="width:100%;" 
                 type="primary" 
@@ -84,8 +83,18 @@ export default {
         
 
         // 出发城市的搜索建议的事件
+        // value是输入框的值
+        // cb是一个回调函数必须要调用，参数的值会显示在下拉框中。
+        // cb调用时候必须要接受一个数组，数组中的元素必须是一个对象，对象中必须有value属性
         queryDepartSearch(value, cb){
             
+            var res = [
+                {value: 1, name: "刘备"},
+                {value: 2},
+                {value: 3}
+            ];
+
+            cb(res);
         },
 
 
@@ -93,16 +102,14 @@ export default {
         // 目标城市输入框获得焦点时触发
         // value 是选中的值，cb是回调函数，接收要展示的列表
         queryDestSearch(value, cb){
-            cb([
-                {value: 1},
-                {value: 2},
-                {value: 3},
-            ]);
+            
         },
        
         // 出发城市下拉选择时触发
+        // 事件的文档地址：https://element.eleme.cn/#/zh-CN/component/input#autocomplete-events
+        // item是当然选中的对象
         handleDepartSelect(item) {
-            
+            console.log(item)
         },
 
         // 目标城市下拉选择时触发
