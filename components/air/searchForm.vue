@@ -130,7 +130,11 @@ export default {
                     v.value = v.name.replace("市", ""); 
                     // 把带有value属性的对象添加到新数组中
                     newData.push(v);
-                })
+                });
+
+                // 默认选中第一个
+                this.form.departCity = newData[0].value;
+                this.form.departCode = newData[0].sort;
 
                 //显示到下拉列表中
                 cb(newData);
@@ -166,7 +170,11 @@ export default {
                     v.value = v.name.replace("市", ""); 
                     // 把带有value属性的对象添加到新数组中
                     newData.push(v);
-                })
+                });
+
+                // 默认选中第一个
+                this.form.destCity = newData[0].value;
+                this.form.destCode = newData[0].sort;
 
                 //显示到下拉列表中
                 cb(newData);
