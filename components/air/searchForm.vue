@@ -143,7 +143,10 @@ export default {
         // 事件的文档地址：https://element.eleme.cn/#/zh-CN/component/input#autocomplete-events
         // item是当然选中的对象
         handleDepartSelect(item) {
-            console.log(item)
+
+            // 把选中的值设置给form
+            this.form.departCity = item.value;
+            this.form.departCode = item.sort;
         },
 
         // 目标城市下拉选择时触发
