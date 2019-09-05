@@ -16,8 +16,6 @@
         <el-form class="search-form-content" ref="form" label-width="80px">
 
             <el-form-item label="出发城市">
-
-
                 <!-- 文档地址：https://element.eleme.cn/#/zh-CN/component/input#yuan-cheng-sou-suo -->
 
                 <!-- fetch-suggestions: 获取搜索建议，并且显示在输入框的下拉框中 -->
@@ -27,11 +25,13 @@
                 placeholder="请搜索出发城市"
                 @select="handleDepartSelect"
                 class="el-autocomplete"
+                v-model="form.departCity"
                 ></el-autocomplete>
-
             </el-form-item>
 
             <el-form-item label="到达城市">
+                <!-- fetch-suggestions: 每次输入时候都会执行，获取搜索建议，并且显示在输入框的下拉框中 -->
+                <!-- select：在下拉框中选中时候时候触发的事件 -->
                 <el-autocomplete
                 :fetch-suggestions="queryDestSearch"
                 placeholder="请搜索到达城市"
@@ -41,12 +41,15 @@
             </el-form-item>
 
             <el-form-item label="出发时间">
-                <!-- change 用户确认选择日期时触发 -->
-                <el-date-picker type="date" 
+                
+                <!-- change：选中日期时候触发 -->
+                <el-date-picker 
+                type="date" 
                 placeholder="请选择日期" 
                 style="width: 100%;"
                 @change="handleDate">
                 </el-date-picker>
+
             </el-form-item>
 
             <el-form-item label="">
@@ -73,6 +76,15 @@ export default {
                 {icon: "iconfont iconshuangxiang", name: "往返"}
             ],
             currentTab: 0,
+
+            form: {
+                departCity: "", // 出发城市
+                departCode: "", // 出发城市代码
+                destCity: "",
+                destCode: "",
+                departDate: ""
+            }
+
         }
     },
     methods: {
@@ -87,14 +99,36 @@ export default {
         // cb是一个回调函数必须要调用，参数的值会显示在下拉框中。
         // cb调用时候必须要接受一个数组，数组中的元素必须是一个对象，对象中必须有value属性
         queryDepartSearch(value, cb){
-            
-            var res = [
-                {value: 1, name: "刘备"},
-                {value: 2},
-                {value: 3}
-            ];
 
-            cb(res);
+            if(!value){
+                return;
+            }
+            
+            // 根据用户的输入请求建议城市
+            this.$axios({
+                url: "/airs/city",
+                // get参数
+                params: {
+                    // 输入框的关键字
+                    name: value
+                }
+            }).then(res => {
+                // 数组
+                const {data} = res.data;
+
+                // 给数组中每个对象添加value属性
+                const newData = [];
+                data.forEach(v => {
+                    // 添加value属性
+                    v.value = v.name.replace("市", ""); 
+                    // 把带有value属性的对象添加到新数组中
+                    newData.push(v);
+                })
+
+                //显示到下拉列表中
+                cb(newData);
+            })
+
         },
 
 
@@ -118,8 +152,9 @@ export default {
         },
 
         // 确认选择日期时触发
+        // value会返回当然选中的日期
         handleDate(value){
-           
+            console.log(value)
         },
 
         // 触发和目标城市切换时触发
