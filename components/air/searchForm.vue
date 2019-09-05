@@ -37,6 +37,7 @@
                 placeholder="请搜索到达城市"
                 @select="handleDestSelect"
                 class="el-autocomplete"
+                v-model="form.destCity"
                 ></el-autocomplete>
             </el-form-item>
 
@@ -47,7 +48,8 @@
                 type="date" 
                 placeholder="请选择日期" 
                 style="width: 100%;"
-                @change="handleDate">
+                @change="handleDate"
+                v-model="form.departDate">
                 </el-date-picker>
 
             </el-form-item>
@@ -68,6 +70,9 @@
 </template>
 
 <script>
+
+import moment from "moment";
+
 export default {
     data(){
         return {
@@ -101,6 +106,8 @@ export default {
         queryDepartSearch(value, cb){
 
             if(!value){
+                // 传递空数组不会出现下拉框
+                cb([]);
                 return;
             }
             
@@ -128,15 +135,42 @@ export default {
                 //显示到下拉列表中
                 cb(newData);
             })
-
         },
-
 
 
         // 目标城市输入框获得焦点时触发
         // value 是选中的值，cb是回调函数，接收要展示的列表
         queryDestSearch(value, cb){
+            if(!value){
+                // 传递空数组不会出现下拉框
+                cb([]);
+                return;
+            }
             
+            // 根据用户的输入请求建议城市
+            this.$axios({
+                url: "/airs/city",
+                // get参数
+                params: {
+                    // 输入框的关键字
+                    name: value
+                }
+            }).then(res => {
+                // 数组
+                const {data} = res.data;
+
+                // 给数组中每个对象添加value属性
+                const newData = [];
+                data.forEach(v => {
+                    // 添加value属性
+                    v.value = v.name.replace("市", ""); 
+                    // 把带有value属性的对象添加到新数组中
+                    newData.push(v);
+                })
+
+                //显示到下拉列表中
+                cb(newData);
+            })
         },
        
         // 出发城市下拉选择时触发
@@ -151,13 +185,16 @@ export default {
 
         // 目标城市下拉选择时触发
         handleDestSelect(item) {
-            
+            // 把选中的值设置给form
+            this.form.destCity = item.value;
+            this.form.destCode = item.sort;
         },
 
         // 确认选择日期时触发
         // value会返回当然选中的日期
         handleDate(value){
-            console.log(value)
+            // 转换
+            this.form.departDate = moment(value).format(`YYYY-MM-DD`);
         },
 
         // 触发和目标城市切换时触发
@@ -167,7 +204,7 @@ export default {
 
         // 提交表单是触发
         handleSubmit(){
-           
+           console.log(this.form)
         }
     },
     mounted() {
