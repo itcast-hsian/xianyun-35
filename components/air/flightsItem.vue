@@ -51,17 +51,21 @@
                 </el-col>
             </el-row>
         </div>
+        {{data.value}}
     </div>
 </template>
 
 <script>
 export default {
+    // 不清楚data的类型，引用的错误
+    // props: ["data"]
 
     props: {
-        // 数据
+        //data表示组件可以接收的属性
         data: {
+            // type不能修改，用于声明属性的类型
             type: Object,
-            // 默认是空数组
+            // 如果调用组件不传值，采用default的默认值
             default: {}
         }
     }
