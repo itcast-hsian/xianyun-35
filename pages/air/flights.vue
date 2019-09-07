@@ -16,7 +16,7 @@
                 <!-- 航班信息 -->
                 <div>
                     <FlightsItem 
-                    v-for="(item, index) in flightsData.flights"
+                    v-for="(item, index) in dataList"
                     :key="index"
                     :data="item"/>
 
@@ -56,6 +56,8 @@ export default {
         return {
             // 机票列表返回的总数据，总数据包含4个属性，flights/info/options/tatol
             flightsData: {},
+            // 当前显示的列表数组
+            dataList: [],
 
             pageIndex:1, // 当前的页码
             pageSize: 5, // 当前的条数
@@ -78,6 +80,12 @@ export default {
         }).then(res => {
             // 赋值给总数据
             this.flightsData = res.data;
+
+            // 分页的总条数
+            this.total =  this.flightsData.flights.length;
+
+            // 第一页的值
+            this.dataList = this.flightsData.flights.slice(0, 5);
         })
     },
 
