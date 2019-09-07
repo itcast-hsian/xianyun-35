@@ -24,6 +24,7 @@
                 :fetch-suggestions="queryDepartSearch"
                 placeholder="请搜索出发城市"
                 @select="handleDepartSelect"
+                @blur="handleDepartBlur"
                 class="el-autocomplete"
                 v-model="form.departCity"
                 ></el-autocomplete>
@@ -36,6 +37,7 @@
                 :fetch-suggestions="queryDestSearch"
                 placeholder="请搜索到达城市"
                 @select="handleDestSelect"
+                @blur="handlDestBlur"
                 class="el-autocomplete"
                 v-model="form.destCity"
                 ></el-autocomplete>
@@ -88,7 +90,10 @@ export default {
                 destCity: "",
                 destCode: "",
                 departDate: ""
-            }
+            },
+
+            departData: [], // 存储后台返回的出发城市数组
+            destData: []    // 存储后台返回的到达城市数组
 
         }
     },
@@ -99,7 +104,18 @@ export default {
                 this.$alert("目前暂时不支持往返", "提示");
             }
         },
-        
+
+        // 出发城市输入框失去焦点时候触发
+        handleDepartBlur(){
+            this.form.departCity = this.departData[0] ? this.departData[0].value : "";
+            this.form.departCode = this.departData[0] ? this.departData[0].sort : "";
+        },
+
+        // 到达城市输入框失去焦点时候触发
+        handlDestBlur(){
+            this.form.destCity = this.destData[0] ? this.destData[0].value : "";
+            this.form.destCode = this.destData[0] ? this.destData[0].sort : "";
+        },
 
         // 出发城市的搜索建议的事件
         // value是输入框的值
@@ -134,9 +150,8 @@ export default {
                     newData.push(v);
                 });
 
-                // 默认选中第一个
-                this.form.departCity = newData[0].value;
-                this.form.departCode = newData[0].sort;
+                // 把转换后的数组赋值给data
+                this.departData = newData;
 
                 //显示到下拉列表中
                 cb(newData);
@@ -174,9 +189,8 @@ export default {
                     newData.push(v);
                 });
 
-                // 默认选中第一个
-                this.form.destCity = newData[0].value;
-                this.form.destCode = newData[0].sort;
+                // 把转换后的数组赋值给data
+                this.destData = newData;
 
                 //显示到下拉列表中
                 cb(newData);
