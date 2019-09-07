@@ -95,9 +95,16 @@ export default {
 
         },
 
-        // 页码切换时候触发
-        handleCurrentChange(){
+        // 页码切换时候触发, val是点击的页码
+        handleCurrentChange(val){
 
+            this.pageIndex = val; // 当前页
+            
+            // 按照数学公式切换dataList的值
+            this.dataList = this.flightsData.flights.slice( 
+                (this.pageIndex - 1) * this.pageSize, 
+                this.pageIndex * this.pageSize 
+            );
         }
     }
 }
