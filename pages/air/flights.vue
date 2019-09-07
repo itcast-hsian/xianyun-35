@@ -17,7 +17,8 @@
                 <div>
                     <FlightsItem 
                     v-for="(item, index) in flightsData.flights"
-                    :key="index"/>
+                    :key="index"
+                    :data="item"/>
                 </div>
             </div>
 
