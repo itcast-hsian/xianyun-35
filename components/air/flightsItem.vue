@@ -13,7 +13,7 @@
                             <span>{{data.org_airport_name}}{{data.org_airport_quay}}</span>
                         </el-col>
                         <el-col :span="8" class="flight-time">
-                            <span>2时20分</span>
+                            <span>{{rankTime}}</span>
                         </el-col>
                         <el-col :span="8" class="flight-airport">
                             <strong>{{data.arr_time}}</strong>
@@ -66,6 +66,38 @@ export default {
             type: Object,
             // 如果调用组件不传值，采用default的默认值
             default: {}
+        }
+    },
+
+    // computed和data一样都可以在模板中渲染，区别在computed的属性值是一个函数，
+    // 最终的变量的值是由函数返回。
+    computed: {
+        // 相隔时间
+        rankTime(){
+            // 出发时间,返回值是数组
+            const dep = this.data.dep_time.split(":");
+            // 到达时间,返回值是数组
+            const arr = this.data.arr_time.split(":");
+
+            // 如果到达的小时小于出发的小时，说明到第二天，需要到达小时 +24
+            if(arr[0] < dep[0]){
+                arr[0] += 24;
+            }
+
+            // 到达时间的分钟
+            const arrVal = arr[0] * 60 + +arr[1];
+            // 出发时间啊的分钟
+            const depVal = dep[0] * 60 + +dep[1];
+
+            // 相隔的总分钟
+            const dis = arrVal - depVal;
+
+            // 向下取整获取小时
+            const hours = Math.floor(dis / 60);
+            // 分钟
+            const min = dis % 60;
+
+            return `${hours}时${min}分`;
         }
     }
 }
