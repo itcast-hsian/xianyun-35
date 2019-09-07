@@ -85,14 +85,17 @@ export default {
             this.total =  this.flightsData.flights.length;
 
             // 第一页的值
-            this.dataList = this.flightsData.flights.slice(0, 5);
+            this.dataList = this.flightsData.flights.slice(0, this.pageSize);
         })
     },
 
     methods: {
-        // 每页条数切换时候触发
-        handleSizeChange(){
+        // 每页条数切换时候触发, val是条数
+        handleSizeChange(val){
+            this.pageSize = val;
 
+            // 按照数学公式切换dataList的值
+            this.dataList = this.flightsData.flights.slice(0, val);
         },
 
         // 页码切换时候触发, val是点击的页码
