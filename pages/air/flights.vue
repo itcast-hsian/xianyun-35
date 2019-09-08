@@ -110,8 +110,6 @@ export default {
             // 修改总的航班列表
             this.flightsData.flights = arr;
 
-            console.log( this.flightsData.flights)
-
             // 重新回到第一页
             this.pageIndex = 1;
 
