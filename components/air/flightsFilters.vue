@@ -124,7 +124,6 @@ export default {
 
          // 选择航空公司时候触发
         handleCompany(value){
-
             // 过滤数据，只保留选中的航空公司的航班
             const arr = this.data.flights.filter(v => {  // (this.data.flights) = (:data="cacheFlightsData")
                 return v.airline_name === value;
@@ -145,7 +144,14 @@ export default {
         
         // 撤销条件时候触发
         handleFiltersCancel(){
-           
+            this.airport = "";          // 机场
+            this.flightTimes =  "";     // 出发时间
+            this.company = "";          // 航空公司
+            this.airSize = "";         // 机型大小
+            this.pageIndex = 1;
+
+            // 返回全部的数据
+            this.$emit("setDataList", this.data.flights);
         },
     }
 }
