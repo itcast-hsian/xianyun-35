@@ -5,7 +5,7 @@
             <!-- 顶部过滤列表 -->
             <div class="flights-content">
                 <!-- 过滤条件 -->
-                <FlightsFilters/>
+                <FlightsFilters :data="flightsData"/>
                 
                 <!-- 航班头部布局 -->
                 <FlightsListHead/>
@@ -55,7 +55,9 @@ export default {
     data(){
         return {
             // 机票列表返回的总数据，总数据包含4个属性，flights/info/options/tatol
-            flightsData: {},
+            flightsData: {
+                info: {}
+            },
             // 当前显示的列表数组
             dataList: [],
 
