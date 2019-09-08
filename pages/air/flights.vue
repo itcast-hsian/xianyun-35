@@ -56,7 +56,8 @@ export default {
         return {
             // 机票列表返回的总数据，总数据包含4个属性，flights/info/options/tatol
             flightsData: {
-                info: {}
+                info: {},
+                options: {}
             },
             // 当前显示的列表数组
             dataList: [],
