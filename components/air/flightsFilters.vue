@@ -103,7 +103,13 @@ export default {
 
          // 选择航空公司时候触发
         handleCompany(value){
-            
+
+            // 过滤数据，只保留选中的航空公司的航班
+            const arr = this.data.flights.filter(v => {
+                return v.airline_name === value;
+            })
+
+            this.$emit("setDataList", arr);
         },
 
          // 选择机型时候触发
