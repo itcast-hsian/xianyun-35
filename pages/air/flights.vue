@@ -5,11 +5,10 @@
             <!-- 顶部过滤列表 -->
             <div class="flights-content">
                 <!-- 过滤条件 -->
-                <FlightsFilters :data="flightsData" @setDataList="setDataList"/>
+                <FlightsFilters :data="cacheFlightsData" @setDataList="setDataList"/>
                 
                 <!-- 航班头部布局 -->
                 <FlightsListHead/>
-                
                 
                 <!-- 航班信息 -->
                 <div>
@@ -59,6 +58,14 @@ export default {
                 info: {},
                 options: {}
             },
+
+            // 代表是大的数据，初始值和上面的flightsData是一样的，
+            // 这个变量一旦赋值之后不能再被修改
+            cacheFlightsData: {
+                info: {},
+                options: {}
+            },
+
             // 当前显示的列表数组
             dataList: [],
 
@@ -85,6 +92,9 @@ export default {
             // 赋值给总数据
             this.flightsData = res.data;
 
+            // 赋值给缓存总数据
+            this.cacheFlightsData = {...res.data};
+
             // 分页的总条数
             this.total =  this.flightsData.flights.length;
 
@@ -97,7 +107,13 @@ export default {
 
         // 该方法传递给子组件用于修改dataList
         setDataList(arr){
+            // 修改总的航班列表
             this.flightsData.flights = arr;
+
+            console.log( this.flightsData.flights)
+
+            // 重新回到第一页
+            this.pageIndex = 1;
 
             // 按照数学公式切换dataList的值
             this.dataList = this.flightsData.flights.slice( 
