@@ -201,7 +201,18 @@ export default {
                 air: this.$route.query.id
             }
 
-            console.log(data)
+            // 提交订单
+            this.$axios({
+                url: "/airorders",
+                method: "POST",
+                // 可以给接口单独加上请求头
+                headers: {
+                    Authorization: `Bearer ${this.$store.state.user.userInfo.token}`
+                },
+                data
+            }).then(res => {
+                console.log(res);
+            })
         }
     }
 }
