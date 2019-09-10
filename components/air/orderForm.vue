@@ -271,7 +271,7 @@ export default {
                 data
             }).then(res => {
                 console.log(res);
-            })
+            });
         }
     }
 }

@@ -65,8 +65,6 @@ export default {
         // 提交登录
         handleLoginSubmit(){
 
-            console.log(this)
-
             // element-ui的验证表单的事件
             this.$refs.form.validate(valid => {
 
@@ -81,7 +79,10 @@ export default {
                     }).then(res => {
                         // 如何调用mutations下的setUserInfo的方法 commit
                         // commit接受两个参数，第一个mutations参数是方法名，第二个参数数据
-                        this.$store.commit("user/setUserInfo", res.data)
+                        this.$store.commit("user/setUserInfo", res.data);
+
+                        // 返回上一页
+                        this.$router.back();
                     })
 
                 }else{
