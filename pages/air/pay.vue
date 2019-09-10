@@ -11,8 +11,10 @@
                 align="middle"
                 class="pay-qrcode">
                     <div class="qrcode">
+
                         <!-- 二维码 -->
                         <canvas id="qrcode-stage"></canvas>
+
                         <p>请使用微信扫一扫</p>
                         <p>扫描二维码支付</p>
                     </div>
@@ -26,8 +28,34 @@
 </template>
 
 <script>
+
+import QRCode from "qrcode";
+
 export default {
-    
+    mounted(){
+
+        setTimeout(() => {
+            // 请求订单详情
+            this.$axios({
+                url: "/airorders/" + this.$route.query.id,
+                // 可以给接口单独加上请求头
+                headers: {
+                    Authorization: `Bearer ${this.$store.state.user.userInfo.token}`
+                },
+            }).then(res => {
+                console.log(res)
+
+                // 获取到canvas节点元素
+                const canvas = document.getElementById("qrcode-stage");
+                // 要生二维码的连接
+                const {code_url} = res.data.payInfo;
+                
+                QRCode.toCanvas(canvas, code_url, {
+                    width: 200
+                });
+            })
+        }, 10);
+    }
 }
 </script>
 
