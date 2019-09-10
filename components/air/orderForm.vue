@@ -125,6 +125,9 @@ export default {
         }).then(res => {
             // 保存机票的数据
             this.infoData = res.data;
+
+            // 调用store的方法，把infoData存到store中
+            this.$store.commit("air/setInfoData", this.infoData);
         })
     },
 
