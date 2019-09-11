@@ -14,6 +14,7 @@ export const state = () => {
 export const mutations = {
     // 修改机票信息
     setInfoData(state, data){
+        // 
         state.infoData = data;
     },
 
