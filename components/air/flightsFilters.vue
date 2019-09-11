@@ -79,7 +79,13 @@ export default {
                 {label: "大", value: "L"},
                 {label: "中", value: "M"},
                 {label: "小", value: "S"}
-            ]
+            ],
+
+            // 用于过滤条件的对象
+            filters: {
+                company: { key: "airline_name", value: "" },
+                airSize: { key: "plane_size", value: "" },
+            }
         }
     },
 
@@ -92,6 +98,38 @@ export default {
     },
 
     methods: {
+        // 多选过滤的方法
+        handleFilters(){
+
+            const arr = [];
+
+            // 循环8个航班数据， item是当前的航班
+            this.data.flights.forEach(item => {
+                // 验证当前的item是否是符合条件，如果是true就符合，false不符合
+                let valid = true;
+
+                // ["company", "airSize"]
+                Object.keys(this.filters).forEach(v => {
+
+                    // 当前没有选择条件
+                    if(!this.filters[v].value) return;
+                    
+                    // this.filters[v].key = airline_name
+                    // item["airline_name"] 返回每个航班信息的航空公司
+                    // this.filters[v].value 是选中的条件的值
+                    if(item[ this.filters[v].key] !== this.filters[v].value){
+                        valid = false;
+                    }
+                })
+
+                if(valid){
+                    arr.push(item);
+                }
+            })
+
+            this.$emit("setDataList", arr);
+        },
+
         // 选择机场时候触发
         handleAirport(value){
 
@@ -125,21 +163,29 @@ export default {
          // 选择航空公司时候触发
         handleCompany(value){
             // 过滤数据，只保留选中的航空公司的航班
-            const arr = this.data.flights.filter(v => {  // (this.data.flights) = (:data="cacheFlightsData")
-                return v.airline_name === value;
-            })
+            // const arr = this.data.flights.filter(v => {  // (this.data.flights) = (:data="cacheFlightsData")
+            //     return v.airline_name === value;
+            // })
 
-            this.$emit("setDataList", arr);
+            // this.$emit("setDataList", arr);
+
+            this.filters.company.value = value;
+
+            this.handleFilters();
         },
 
          // 选择机型时候触发
         handleAirSize(value){
            // 过滤数据，只保留选中的机型大小的航班
-            const arr = this.data.flights.filter(v => {  // (this.data.flights) = (:data="cacheFlightsData")
-                return v.plane_size === value;
-            })
+            // const arr = this.data.flights.filter(v => {  // (this.data.flights) = (:data="cacheFlightsData")
+            //     return v.plane_size === value;
+            // })
 
-            this.$emit("setDataList", arr);
+            // this.$emit("setDataList", arr);
+
+            this.filters.airSize.value = value;
+
+            this.handleFilters();
         },
         
         // 撤销条件时候触发
